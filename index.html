@@ -2,94 +2,180 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Mexh Tech Scroll Demo</title>
+<title>Mexh Tech | Custom Systems Development</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
 <style>
-  body {
-    margin: 0;
-    font-family: Inter, Arial, sans-serif;
-    background: #020617;
-    color: white;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  /* Fake scroll height */
-  .spacer {
-    height: 300vh;
-  }
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #020617;
+  color: #e5e7eb;
+  overflow-x: hidden;
+}
 
-  /* Pinned section */
-  .pin {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
+/* Fake scroll length */
+.scroll-space {
+  height: 400vh;
+}
 
-  .card {
-    width: 80%;
-    max-width: 900px;
-    padding: 60px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
+/* Pinned container */
+.pin {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glass card */
+.glass {
+  width: 85%;
+  max-width: 1100px;
+  min-height: 520px;
+  padding: 50px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(22px);
+  border-radius: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+  .glass {
+    grid-template-columns: 1fr;
     text-align: center;
-    transition: opacity 0.4s ease, transform 0.4s ease;
   }
+}
 
-  .card h1 {
-    font-size: clamp(28px, 5vw, 48px);
-  }
+/* Text */
+h1 {
+  font-size: clamp(28px, 5vw, 54px);
+  margin: 0 0 16px;
+}
 
-  .step {
-    display: none;
-  }
+p {
+  font-size: 18px;
+  color: #cbd5f5;
+}
 
-  .step.active {
-    display: block;
-  }
+/* Image */
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.4s ease;
+}
+
+/* Steps */
+.step {
+  opacity: 0;
+  transform: translateY(30px);
+  position: absolute;
+}
+
+/* Footer spacer */
+.footer {
+  height: 100vh;
+}
 </style>
 </head>
 
 <body>
 
-<div class="spacer"></div>
+<!-- Scroll space -->
+<div class="scroll-space"></div>
 
+<!-- PINNED SCROLL SECTION -->
 <div class="pin">
-  <div class="card">
-    <div class="step active">
-      <h1>Custom Software</h1>
-      <p>Built exactly for your business.</p>
+  <div class="glass">
+
+    <!-- TEXT -->
+    <div style="position:relative">
+      <div class="step" id="step1">
+        <h1>Custom Software</h1>
+        <p>
+          Tailor-made systems engineered exactly for your business workflows.
+        </p>
+      </div>
+
+      <div class="step" id="step2">
+        <h1>Scalable Architecture</h1>
+        <p>
+          Systems designed to grow seamlessly as your business scales.
+        </p>
+      </div>
+
+      <div class="step" id="step3">
+        <h1>Web Applications</h1>
+        <p>
+          High-performance, secure web applications built with modern stacks.
+        </p>
+      </div>
+
+      <div class="step" id="step4">
+        <h1>Automation & APIs</h1>
+        <p>
+          Integrations and automation that reduce manual work dramatically.
+        </p>
+      </div>
     </div>
 
-    <div class="step">
-      <h1>Scalable Architecture</h1>
-      <p>Systems that grow with demand.</p>
-    </div>
+    <!-- IMAGE -->
+    <div class="image" id="image"></div>
 
-    <div class="step">
-      <h1>Automation & APIs</h1>
-      <p>Less manual work. More results.</p>
-    </div>
   </div>
 </div>
 
+<!-- END -->
+<div class="footer"></div>
+
 <script>
-  const steps = document.querySelectorAll('.step');
+gsap.registerPlugin(ScrollTrigger);
 
-  window.addEventListener('scroll', () => {
-    const scroll = window.scrollY;
-    const height = document.body.scrollHeight - window.innerHeight;
-    const progress = scroll / height;
+const images = [
+  "https://images.unsplash.com/featured/?software,code",
+  "https://images.unsplash.com/featured/?server,cloud",
+  "https://images.unsplash.com/featured/?web,technology",
+  "https://images.unsplash.com/featured/?automation,ai"
+];
 
-    steps.forEach(step => step.classList.remove('active'));
+const steps = gsap.utils.toArray(".step");
+const imageBox = document.getElementById("image");
 
-    if (progress < 0.33) steps[0].classList.add('active');
-    else if (progress < 0.66) steps[1].classList.add('active');
-    else steps[2].classList.add('active');
-  });
+imageBox.style.backgroundImage = `url(${images[0]})`;
+
+/* Timeline */
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".scroll-space",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: true
+  }
+});
+
+steps.forEach((step, i) => {
+  tl.to(step, { opacity: 1, y: 0, duration: 1 })
+    .to(imageBox, { backgroundImage: `url(${images[i]})`, duration: 0.5 }, "<")
+    .to(step, { opacity: 0, y: -30, duration: 1 }, "+=0.8");
+});
 </script>
 
 </body>
