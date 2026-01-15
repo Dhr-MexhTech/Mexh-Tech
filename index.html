@@ -1,228 +1,96 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Mexh Tech | Custom Systems Development</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Mexh Tech Scroll Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    background: #020617;
+    color: white;
+  }
 
-  <style>
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+  /* Fake scroll height */
+  .spacer {
+    height: 300vh;
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      color: #e5e7eb;
-      background: linear-gradient(120deg, #020617, #0f172a);
-      overflow-x: hidden;
-    }
+  /* Pinned section */
+  .pin {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
 
-    /* Background blobs */
-    .blob {
-      position: fixed;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, #38bdf8, transparent 70%);
-      filter: blur(120px);
-      z-index: -1;
-      animation: float 10s infinite alternate ease-in-out;
-    }
+  .card {
+    width: 80%;
+    max-width: 900px;
+    padding: 60px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    text-align: center;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
 
-    .blob.one { top: -100px; left: -100px; }
-    .blob.two { bottom: -150px; right: -150px; animation-delay: 2s; }
+  .card h1 {
+    font-size: clamp(28px, 5vw, 48px);
+  }
 
-    @keyframes float {
-      from { transform: translateY(0); }
-      to { transform: translateY(60px); }
-    }
+  .step {
+    display: none;
+  }
 
-    header {
-      padding: 24px 40px;
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(12px);
-      background: rgba(2,6,23,0.6);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      z-index: 10;
-    }
-
-    header h1 {
-      margin: 0;
-      color: #38bdf8;
-      font-weight: 800;
-    }
-
-    section {
-      padding: 100px 20px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    /* Glass card */
-    .glass {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      backdrop-filter: blur(18px);
-      border-radius: 16px;
-      padding: 40px;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .glass:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 30px 80px rgba(56,189,248,0.15);
-    }
-
-    /* HERO */
-    .hero {
-      text-align: center;
-      animation: fadeUp 1.2s ease forwards;
-    }
-
-    .hero h2 {
-      font-size: 56px;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #cbd5f5;
-      max-width: 700px;
-      margin: auto;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 40px;
-      padding: 14px 34px;
-      border-radius: 30px;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      color: #020617;
-      font-weight: 700;
-      text-decoration: none;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(99,102,241,0.4);
-    }
-
-    /* SERVICES */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-      margin-top: 60px;
-    }
-
-    .glass img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-
-    /* Animations */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #94a3b8;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-  </style>
+  .step.active {
+    display: block;
+  }
+</style>
 </head>
 
 <body>
 
-  <!-- BACKGROUND BLOBS -->
-  <div class="blob one"></div>
-  <div class="blob two"></div>
+<div class="spacer"></div>
 
-  <!-- HEADER -->
-  <header>
-    <h1>Mexh Tech</h1>
-  </header>
-
-  <!-- HERO -->
-  <section>
-    <div class="container hero glass">
-      <h2>Custom Software.<br>Engineered to Scale.</h2>
-      <p>
-        Mexh Tech builds high-performance custom systems, web applications,
-        and automation solutions tailored to your business.
-      </p>
-      <a href="#services" class="btn">Explore Services</a>
+<div class="pin">
+  <div class="card">
+    <div class="step active">
+      <h1>Custom Software</h1>
+      <p>Built exactly for your business.</p>
     </div>
-  </section>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="container">
-      <div class="grid">
-
-        <div class="glass">
-          <img src="https://images.unsplash.com/featured/?technology,code" alt="">
-          <h3>Custom Software</h3>
-          <p>
-            Bespoke systems built around your exact workflows and requirements.
-          </p>
-        </div>
-
-        <div class="glass">
-          <img src="https://images.unsplash.com/featured/?web,app" alt="">
-          <h3>Web Applications</h3>
-          <p>
-            Fast, secure, and scalable web applications using modern stacks.
-          </p>
-        </div>
-
-        <div class="glass">
-          <img src="https://images.unsplash.com/featured/?automation,server" alt="">
-          <h3>Automation & APIs</h3>
-          <p>
-            Integrations and automation that eliminate repetitive manual work.
-          </p>
-        </div>
-
-      </div>
+    <div class="step">
+      <h1>Scalable Architecture</h1>
+      <p>Systems that grow with demand.</p>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section>
-    <div class="container glass" style="text-align:center">
-      <h2>Let’s Build Something Powerful</h2>
-      <p>
-        Ready to turn your idea into a scalable system?
-      </p>
-      <a href="mailto:contact@mexhtech.com" class="btn">Contact Mexh Tech</a>
+    <div class="step">
+      <h1>Automation & APIs</h1>
+      <p>Less manual work. More results.</p>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2026 Mexh Tech — Custom Systems Development
-  </footer>
+<script>
+  const steps = document.querySelectorAll('.step');
+
+  window.addEventListener('scroll', () => {
+    const scroll = window.scrollY;
+    const height = document.body.scrollHeight - window.innerHeight;
+    const progress = scroll / height;
+
+    steps.forEach(step => step.classList.remove('active'));
+
+    if (progress < 0.33) steps[0].classList.add('active');
+    else if (progress < 0.66) steps[1].classList.add('active');
+    else steps[2].classList.add('active');
+  });
+</script>
 
 </body>
 </html>
