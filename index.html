@@ -4,46 +4,92 @@
   <meta charset="UTF-8" />
   <title>Mexh Tech | Custom Systems Development</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Mexh Tech builds custom software systems, web applications, and automation solutions for businesses." />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #0f172a;
-      color: #e5e7eb;
-      line-height: 1.6;
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #e5e7eb;
+      background: linear-gradient(120deg, #020617, #0f172a);
+      overflow-x: hidden;
+    }
+
+    /* Background blobs */
+    .blob {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #38bdf8, transparent 70%);
+      filter: blur(120px);
+      z-index: -1;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+
+    .blob.one { top: -100px; left: -100px; }
+    .blob.two { bottom: -150px; right: -150px; animation-delay: 2s; }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(60px); }
+    }
+
+    header {
+      padding: 24px 40px;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(2,6,23,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      z-index: 10;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #38bdf8;
+      font-weight: 800;
+    }
+
+    section {
+      padding: 100px 20px;
     }
 
     .container {
       max-width: 1100px;
       margin: auto;
-      padding: 0 20px;
     }
 
-    header {
-      padding: 20px 0;
-      border-bottom: 1px solid #1e293b;
+    /* Glass card */
+    .glass {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(18px);
+      border-radius: 16px;
+      padding: 40px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #38bdf8;
+    .glass:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 80px rgba(56,189,248,0.15);
     }
 
+    /* HERO */
     .hero {
-      padding: 100px 0;
       text-align: center;
+      animation: fadeUp 1.2s ease forwards;
     }
 
     .hero h2 {
-      font-size: 48px;
+      font-size: 56px;
+      font-weight: 800;
       margin-bottom: 20px;
     }
 
@@ -56,133 +102,126 @@
 
     .btn {
       display: inline-block;
-      margin-top: 30px;
-      padding: 14px 28px;
-      background: #38bdf8;
-      color: #020617;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-
-    section {
-      padding: 80px 0;
-    }
-
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
       margin-top: 40px;
+      padding: 14px 34px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #020617;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .card {
-      background: #020617;
-      padding: 30px;
-      border-radius: 10px;
-      border: 1px solid #1e293b;
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(99,102,241,0.4);
     }
 
-    .card h3 {
-      margin-top: 0;
-      color: #38bdf8;
+    /* SERVICES */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
     }
 
-    .center {
-      text-align: center;
+    .glass img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     footer {
-      padding: 30px 0;
-      border-top: 1px solid #1e293b;
       text-align: center;
+      padding: 40px 20px;
       color: #94a3b8;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
   </style>
 </head>
 
 <body>
 
+  <!-- BACKGROUND BLOBS -->
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+
   <!-- HEADER -->
   <header>
-    <div class="container">
-      <h1>Mexh Tech</h1>
-    </div>
+    <h1>Mexh Tech</h1>
   </header>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <h2>Custom Software.<br>Built for Your Business.</h2>
+  <section>
+    <div class="container hero glass">
+      <h2>Custom Software.<br>Engineered to Scale.</h2>
       <p>
-        Mexh Tech designs and develops custom systems, web applications,
-        and automation solutions tailored to your business needs.
+        Mexh Tech builds high-performance custom systems, web applications,
+        and automation solutions tailored to your business.
       </p>
-      <a href="#contact" class="btn">Start a Project</a>
+      <a href="#services" class="btn">Explore Services</a>
     </div>
   </section>
 
   <!-- SERVICES -->
-  <section>
+  <section id="services">
     <div class="container">
-      <h2 class="center">Our Services</h2>
+      <div class="grid">
 
-      <div class="services">
-        <div class="card">
-          <h3>Custom Software Development</h3>
+        <div class="glass">
+          <img src="https://images.unsplash.com/featured/?technology,code" alt="">
+          <h3>Custom Software</h3>
           <p>
-            We build tailor-made software systems designed specifically
-            around your workflows and goals.
+            Bespoke systems built around your exact workflows and requirements.
           </p>
         </div>
 
-        <div class="card">
+        <div class="glass">
+          <img src="https://images.unsplash.com/featured/?web,app" alt="">
           <h3>Web Applications</h3>
           <p>
-            Secure, scalable, and high-performance web applications
-            using modern technologies.
+            Fast, secure, and scalable web applications using modern stacks.
           </p>
         </div>
 
-        <div class="card">
-          <h3>Automation & Integrations</h3>
+        <div class="glass">
+          <img src="https://images.unsplash.com/featured/?automation,server" alt="">
+          <h3>Automation & APIs</h3>
           <p>
-            APIs, automation, and system integrations that save time
-            and reduce manual work.
+            Integrations and automation that eliminate repetitive manual work.
           </p>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- WHY US -->
-  <section>
-    <div class="container center">
-      <h2>Why Mexh Tech?</h2>
-      <p>
-        We focus on clean architecture, long-term scalability,
-        and solutions that grow with your business.
-      </p>
-    </div>
-  </section>
-
   <!-- CONTACT -->
-  <section id="contact">
-    <div class="container center">
-      <h2>Let’s Build Something Great</h2>
+  <section>
+    <div class="container glass" style="text-align:center">
+      <h2>Let’s Build Something Powerful</h2>
       <p>
-        Have a project in mind? Let’s talk.
+        Ready to turn your idea into a scalable system?
       </p>
-      <a href="mailto:contact@mexhtech.com" class="btn">
-        Contact Mexh Tech
-      </a>
+      <a href="mailto:contact@mexhtech.com" class="btn">Contact Mexh Tech</a>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="container">
-      © 2026 Mexh Tech. All rights reserved.
-    </div>
+    © 2026 Mexh Tech — Custom Systems Development
   </footer>
 
 </body>
